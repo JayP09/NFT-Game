@@ -1,32 +1,104 @@
-const { hexZeroPad } = require("ethers/lib/utils");
 
 const main = async () => {
-    const game = await hre.ethers.getContractFactory("Game");
-    const gameContract = await game.deploy(
-        ["Neo","Morpheus","Trinity"],
-        ["https://i.imgur.com/OCXEh4z.png",
-        "https://i.imgur.com/KjxsdOg.jpeg",
-        "https://i.imgur.com/Grw5gbj.jpeg"],
-        [300,250,200],
-        [15,50,100],
-        "Agent Smith", // boss Name
-        "https://i.imgur.com/QLIu41k.jpeg", // Boss image
-        10000, // Boss hp
-        25 // Boss attack damage
-    );
-    await gameContract.deployed();
+  const [deployer,addr1] = await ethers.getSigners();
 
-    console.log("Game contract address: ", gameContract.address)
+  const matrix = await hre.ethers.getContractFactory('Matrix');
+  const matrixTokenContract = await matrix.deploy("Matrix","MAT",ethers.utils.parseEther("1000000"));
+  await matrixTokenContract.deployed();
 
-    let txn;
-    txn = await gameContract.mintCharacterNFT(2);
-    await txn.wait();
+  const game = await hre.ethers.getContractFactory("Game");
+  const gameContract = await game.deploy(
+      ["Neo","Morpheus","Trinity"],
+      ["QmdzYNDaHMVUiAVuX4qmpzBx9S9uN4AXPG3kPPhJF1GY3w",
+      "QmVs5MdW3qTT6DGXAZJAgtkh1ifR6fJrC8HZ8DE7XoxJMA",
+      "QmTkVhe82yTeK4eg1d8rvSeYEQYNKFT3YMD7wbr5o77MME"],
+      [500,250,200],
+      [25,50,100],
+      [1,1,1],
+      [ethers.utils.parseEther("100"),ethers.utils.parseEther("100"),ethers.utils.parseEther("100")],
+      ["Agent Smith","Agent Smith","Agent Smith"],
+      ["https://i.imgur.com/QLIu41k.jpeg","https://i.imgur.com/QLIu41k.jpeg","https://i.imgur.com/QLIu41k.jpeg"],
+      [50,50,50],
+      [25,25,25],
+      matrixTokenContract.address
+  );
+  await gameContract.deployed();
 
-    txn = await gameContract.attackBoss();
-    await txn.wait();
+  console.log("deployer Address:",deployer.address)
+  console.log("Game contract address: ", gameContract.address)
+  console.log("MatrixToken contract address: ",matrixTokenContract.address);
 
-    txn = await gameContract.attackBoss();
-    await txn.wait();
+  let txn = ethers.utils.formatEther(await matrixTokenContract.balanceOf(deployer.address));
+  console.log("deployer balance", txn);
+  console.log("-------------------------------------");
+
+  txn = await matrixTokenContract.transfer(gameContract.address,ethers.utils.parseEther("900000"));
+  console.log("GameContract token transfer", txn);
+  console.log("-------------------------------------");
+
+  txn = ethers.utils.formatEther(await matrixTokenContract.balanceOf(gameContract.address));
+  console.log("game contract balance", txn)
+  console.log("-------------------------------------");
+
+  txn = await gameContract.connect(addr1).mintCharacterNFT(0);
+  await txn.wait();
+  console.log("-------------------------------------");
+
+  txn = ethers.utils.formatEther(await matrixTokenContract.balanceOf(addr1.address));
+  console.log("user balance", txn)
+  console.log("-------------------------------------");
+
+  txn = await gameContract.connect(addr1).checkIfUserHasNFT();
+
+  console.log("User NFT data: ", txn);
+
+  console.log("-------------------------------------");
+
+  txn = await gameContract.connect(addr1).attackBoss();
+  await txn.wait()
+
+  txn = await gameContract.connect(addr1).attackBoss();
+  await txn.wait()
+
+  txn = await gameContract.connect(addr1).checkIfUserHasNFT();
+  console.log("user NFT data after attack: ",txn);
+
+  console.log("-------------------------------------");
+
+  // txn = await gameContract.connect(addr1).reviveCharacterNFT(ethers.utils.parseEther("10"));
+  // await txn.wait();
+
+  // console.log("-------------------------------------");
+
+  // txn = await gameContract.connect(addr1).checkIfUserHasNFT();
+  // console.log("user NFT data after revive: ",txn);
+
+  // console.log("-------------------------------------");
+
+  txn = ethers.utils.formatEther(await matrixTokenContract.balanceOf(addr1.address));
+  console.log("user balance before rewards", txn)
+  console.log("-------------------------------------");
+
+  // txn = ethers.utils.formatEther(await matrixTokenContract.balanceOf(gameContract.address));
+  // console.log("game contract balance", txn)
+  // console.log("-------------------------------------");
+
+  txn = await gameContract.connect(addr1).claimWinningRewards();
+  await txn.wait();
+
+  console.log("-------------------------------------");
+
+  txn = await gameContract.connect(addr1).checkIfUserHasNFT();
+  console.log("user NFT data after Levelup: ",txn);
+
+  console.log("-------------------------------------");
+
+  txn = ethers.utils.formatEther(await matrixTokenContract.balanceOf(addr1.address));
+  console.log("user balance", txn)
+  console.log("-------------------------------------");
+
+
+
 }
 
 
