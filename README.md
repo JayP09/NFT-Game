@@ -13,3 +13,6 @@ npx hardhat node
 node scripts/sample-script.js
 npx hardhat help
 ```
+# Demo: 
+
+<img src="./assets/nftgame.png">
