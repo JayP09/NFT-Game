@@ -4,6 +4,9 @@ import { CONTRACT_ADDRESS, transformCharacterData } from "../../constants";
 import Game from '../../artifacts/contracts/Game.sol/Game.json';
 import './Arena.css';
 import LoadingIndicator from "../LoadingIndicator";
+import image1 from "./assets/1.jpg"
+import image2 from "./assets/2.png"
+import image3 from "./assets/3.jpg"
 
 const Arena = ({ characterNFT, setCharacterNFT }) => {
     // State 
@@ -51,11 +54,11 @@ const Arena = ({ characterNFT, setCharacterNFT }) => {
             console.log(`AttackComplete: Boss Hp: ${bossHp} Player Hp: ${playerHp}`);
 
             // Update both player and boss Hp
-            if(bossHp == 0){
+            if(bossHp === 0){
                 setAttackState("herowins")
             }
 
-            if(playerHp == 0) {
+            if(playerHp === 0) {
                 setAttackState("revivehero")
             }
 
@@ -172,6 +175,16 @@ const Arena = ({ characterNFT, setCharacterNFT }) => {
         }
     }
 
+    const choseImage = (name) => {
+        if (name === "Neo") {
+            return image1
+        } else if(name === "Morpheus") {
+            return image2
+        } else {
+            return image3
+        }
+    }
+
     return (
         <div className="arena-container">
             {boss && characterNFT && (
@@ -229,7 +242,7 @@ const Arena = ({ characterNFT, setCharacterNFT }) => {
                         <div className="image-content">
                             <h2>{characterNFT.name}</h2>
                             <img 
-                                src={`https://cloudflare-ipfs.com/ipfs/${characterNFT.imageURI}`}
+                                src={choseImage(characterNFT.name)}
                                 alt={`Character ${characterNFT.name}`}
                             />
                             <div className="health-bar">

@@ -4,6 +4,9 @@ import { ethers } from 'ethers';
 import { CONTRACT_ADDRESS, transformCharacterData } from '../../constants';
 import Game from '../../artifacts/contracts/Game.sol/Game.json';
 import LoadingIndicator from '../LoadingIndicator';
+import image1 from "./assets/1.jpg"
+import image2 from "./assets/2.png"
+import image3 from "./assets/3.jpg"
 
 const SelectCharacter = ({ setCharacterNFT }) => {
     const [characters, setCharacters] = useState([]);
@@ -89,6 +92,15 @@ const SelectCharacter = ({ setCharacterNFT }) => {
             setMintingCharacter(false);
         }
     }
+    const choseImage = (index) => {
+        if (index === 0){
+            return image1
+        } else if(index === 1){
+            return image2
+        } else {
+            return image3
+        }
+    }
 
     const renderCharacters = () => (
         characters.map((character, index) => (
@@ -96,7 +108,7 @@ const SelectCharacter = ({ setCharacterNFT }) => {
                 <div className='name-container'>
                     <p>{character.name}</p>
                 </div>
-                <img src={`https://cloudflare-ipfs.com/ipfs/${character.imageURI}`} alt={character.name} />
+                <img src={choseImage(index)} alt={character.name} />
                 <button
                     type="button"
                     className="character-mint-button"

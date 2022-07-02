@@ -10,9 +10,9 @@ const main = async () => {
   const game = await hre.ethers.getContractFactory("Game");
   const gameContract = await game.deploy(
       ["Neo","Morpheus","Trinity"],
-      ["QmdzYNDaHMVUiAVuX4qmpzBx9S9uN4AXPG3kPPhJF1GY3w",
-      "QmVs5MdW3qTT6DGXAZJAgtkh1ifR6fJrC8HZ8DE7XoxJMA",
-      "QmTkVhe82yTeK4eg1d8rvSeYEQYNKFT3YMD7wbr5o77MME"],
+      ["QmV9BobumM4qUfvtzF5TFfrasNfFza17vniew9VvDTe9W5",
+      "QmdrHxaWuBnnZJNCaikHjLS4BdtkHq8MsYSjjVXP3oYkzP",
+      "QmX7aAa4nvjtxTQ7BnYhzutnxnihQpioY1d6RiMu8hCZxp"],
       [300,250,200],
       [25,50,100],
       [1,1,1],
