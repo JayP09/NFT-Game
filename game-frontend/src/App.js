@@ -3,7 +3,7 @@ import twitterLogo from './assets/twitter-logo.svg';
 import './App.css';
 
 import { CONTRACT_ADDRESS, transformCharacterData } from './constants';
-import Game from './artifacts/contracts/Game.sol/Game.json';
+import Game from './json/game.json';
 import { ethers } from 'ethers';
 
 // Components
