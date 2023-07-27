@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { CONTRACT_ADDRESS, transformCharacterData } from "../../constants";
-import Game from "../../artifacts/contracts/Game.sol/Game.json";
+import Game from "../../json/contracts/Game.sol/Game.json";
 import "./Arena.css";
 import LoadingIndicator from "../LoadingIndicator";
 import image1 from "./assets/1.jpg";
