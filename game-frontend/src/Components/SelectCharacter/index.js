@@ -78,7 +78,7 @@ const SelectCharacter = ({ setCharacterNFT }) => {
         gameContract.off("CharacterNFTMinted", onCharacterMint);
       }
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameContract]);
 
   const mintCharacterNFTAction = (characterId) => async () => {

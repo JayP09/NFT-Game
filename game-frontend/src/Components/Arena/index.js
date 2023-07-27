@@ -125,7 +125,7 @@ const Arena = ({ characterNFT, setCharacterNFT }) => {
         gameContract.on("ClaimRewards", onClaimRewards);
       }
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameContract]);
 
   const runAttackAction = async () => {

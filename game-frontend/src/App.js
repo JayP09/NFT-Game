@@ -5,9 +5,9 @@ import { ethers } from "ethers";
 import Game from "./json/game.json";
 
 // Components
-import LoadingIndicator from "./Components/LoadingIndicator";
-import SelectCharacter from "./Components/SelectCharacter";
-import Arena from "./Components/Arena";
+import LoadingIndicator from "./components/LoadingIndicator";
+import SelectCharacter from "./components/SelectCharacter";
+import Arena from "./components/Arena";
 
 // Constants
 import { CONTRACT_ADDRESS, transformCharacterData } from "./constants";
